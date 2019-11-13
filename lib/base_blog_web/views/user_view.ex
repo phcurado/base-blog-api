@@ -12,12 +12,16 @@ defmodule BaseBlogWeb.UserView do
   end
 
   def render("user.json", %{user: user}) do
-    IO.inspect user.author
     %{id: user.id,
       email: user.email,
+      password_hash: user.password_hash,
       name: user.name,
       birthday: user.birthday,
       author: AuthorView.author_serial(user) 
     }
+  end
+  
+  def render("jwt.json", %{jwt: jwt}) do
+    %{jwt: jwt}
   end
 end

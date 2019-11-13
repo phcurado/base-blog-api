@@ -3,6 +3,8 @@ defmodule BaseBlogWeb.UserController do
 
   alias BaseBlog.Accounts
   alias BaseBlog.Accounts.User
+  alias BaseBlog.Guardian
+
 
   action_fallback BaseBlogWeb.FallbackController
 
@@ -12,13 +14,32 @@ defmodule BaseBlogWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
+    with {:ok, %User{} = user} <- Accounts.create_user(user_params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+      |> render("jwt.json", jwt: token)
     end
   end
+
+  def sign_in(conn, %{"email" => email, "password" => password}) do
+    case Accounts.token_sign_in(email, password) do
+      {:ok, token, _claims} ->
+        conn |> render("jwt.json", jwt: token)
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  # def create(conn, %{"user" => user_params}) do
+  #   with {:ok, %User{} = user} <- Accounts.create_user(user_params),
+  #        {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
+  #     conn
+  #     |> put_status(:created)
+  #     |> put_resp_header("authorization", "bearer: " <> token)
+  #     |> render("show.json", user: user)
+  #   end
+  # end
 
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)

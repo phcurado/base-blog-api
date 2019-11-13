@@ -11,9 +11,7 @@ defmodule BaseBlogWeb.AuthorView do
   end
 
   def render("author.json", %{author: author}) do
-    %{id: author.id,
-      name: author.name,
-      age: author.age}
+    author_serial author
   end
 
   def author_serial(%{author: author}) do

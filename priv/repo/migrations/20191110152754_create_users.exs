@@ -4,13 +4,14 @@ defmodule BaseBlog.Repo.Migrations.CreateUsers do
   def change do
     create table(:users) do
       add :email, :string, null: false
+      add :password_hash, :string
       add :name, :string
       add :birthday, :date
 
       timestamps()
     end
 
-    create index(:users, [:email], unique: true) 
+    create unique_index(:users, [:email])
 
   end
 end

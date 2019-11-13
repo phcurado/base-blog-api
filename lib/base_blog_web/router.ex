@@ -7,7 +7,10 @@ defmodule BaseBlogWeb.Router do
 
   scope "/api", BaseBlogWeb do
     pipe_through :api
-    resources "/users", UserController
+
+    post "/sign_up", UserController, :create
+    post "/sign_in", UserController, :sign_in
+    
     resources "/authors", AuthorController
   end
 end
