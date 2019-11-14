@@ -25,25 +25,18 @@ defmodule BaseBlogWeb.UserController do
   def sign_in(conn, %{"email" => email, "password" => password}) do
     case Accounts.token_sign_in(email, password) do
       {:ok, token, _claims} ->
-        conn |> render("jwt.json", jwt: token)
+        conn 
+        |> put_resp_header("authorization", "bearer: " <> token)
+        |> render("jwt.json", jwt: token)
       _ ->
         {:error, :unauthorized}
     end
   end
 
-  # def create(conn, %{"user" => user_params}) do
-  #   with {:ok, %User{} = user} <- Accounts.create_user(user_params),
-  #        {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
-  #     conn
-  #     |> put_status(:created)
-  #     |> put_resp_header("authorization", "bearer: " <> token)
-  #     |> render("show.json", user: user)
-  #   end
-  # end
-
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    render(conn, "show.json", user: user)
+  def show(conn, _params) do
+    user = Guardian.Plug.current_resource(conn)
+    conn 
+    |> render("show.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
