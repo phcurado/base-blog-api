@@ -1,6 +1,7 @@
 defmodule BaseBlogWeb.AuthorView do
   use BaseBlogWeb, :view
   alias BaseBlogWeb.AuthorView
+  alias BaseBlog.Accounts.Author
 
   def render("index.json", %{authors: authors}) do
     %{data: render_many(authors, AuthorView, "author.json")}
@@ -14,10 +15,14 @@ defmodule BaseBlogWeb.AuthorView do
     author_serial author
   end
 
-  def author_serial(%{author: author}) do
+  def author_serial(%Author{} = author) do
     %{id: author.id,
       name: author.name,
       age: author.age
     }
+  end
+
+  def author_serial(_) do
+    %{}
   end
 end
