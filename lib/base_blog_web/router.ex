@@ -12,13 +12,14 @@ defmodule BaseBlogWeb.Router do
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
     
-    resources "/authors", AuthorController
+    resources "/posts", PostController
   end
 
   scope "/api", BaseBlogWeb do
     pipe_through [:api, :jwt_authenticated]
 
     get "/me", UserController, :show
+    put "/users/:id", UserController, :update
   end
   
   pipeline :jwt_authenticated do

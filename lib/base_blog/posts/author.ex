@@ -1,19 +1,20 @@
-defmodule BaseBlog.Accounts.Author do
+defmodule BaseBlog.Posts.Author do
   use Ecto.Schema
   import Ecto.Changeset
   alias BaseBlog.Accounts.User
+  alias BaseBlog.Posts.Post
 
   schema "authors" do
-    field :age, :integer
-    field :name, :string
+    field :nickname, :string
     belongs_to :user, User
+    has_many :posts, Post
     timestamps()
   end
 
   @doc false
   def changeset(author, attrs) do
     author
-    |> cast(attrs, [:name, :age])
-    |> validate_required([:name, :age])
+    |> cast(attrs, [:nickname])
+    |> validate_required([:nickname])
   end
 end

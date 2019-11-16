@@ -23,7 +23,6 @@ defmodule BaseBlogWeb.UserView do
   def user_serial(%User{} = user) do
     %{id: user.id,
       email: user.email,
-      password_hash: user.password_hash,
       name: user.name,
       birthday: user.birthday,
       author: AuthorView.author_serial(user.author) 
