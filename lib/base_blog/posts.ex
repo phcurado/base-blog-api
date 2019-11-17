@@ -65,7 +65,7 @@ defmodule BaseBlog.Posts do
 	
   def update_post(%Post{} = post, attrs) do
     post
-    |> Post.changeset(attrs)
+    |> Post.changeset(attrs, parse_tags(attrs["tags"] || ""))
     |> Repo.update()
   end
 
