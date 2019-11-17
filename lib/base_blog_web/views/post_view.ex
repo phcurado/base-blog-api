@@ -1,10 +1,11 @@
 defmodule BaseBlogWeb.PostView do
   use BaseBlogWeb, :view
   
-  import Helper.MapRelation
+  import Helper.MapHelper
 
   alias BaseBlogWeb.PostView
   alias BaseBlogWeb.AuthorView
+  alias BaseBlogWeb.TagView
   alias BaseBlog.Posts.Author
   alias BaseBlog.Posts.Post
 
@@ -19,16 +20,18 @@ defmodule BaseBlogWeb.PostView do
   def render("post.json", %{post: post}) do
     mount_base_struct(post)
     |> add_relation(:author, render_author(post.author))
+    |> add_relation(:tags, render_tags(post.tags))
   end
 
   defp mount_base_struct(%Post{} = post) do
     %{
       id: post.id,
       title: post.title,
+      abstract: post.abstract,
       slug: post.slug,
       html: post.html,
-      status: post.status
-      #categories: render_many(post.categories, CategoryView, "category.json")} #testar
+      status: post.status,
+      inserted_at: post.inserted_at
     }
   end
 
@@ -36,5 +39,10 @@ defmodule BaseBlogWeb.PostView do
     render_one(author, AuthorView, "author.json")
   end
   defp render_author(_), do: nil
+
+  defp render_tags(tags) when is_list(tags) do
+    render_many(tags, TagView, "tag.json")
+  end
+  defp render_tags(_), do: nil
   
 end

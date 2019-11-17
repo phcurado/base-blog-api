@@ -1,7 +1,7 @@
 defmodule BaseBlogWeb.UserView do
   use BaseBlogWeb, :view
 
-  import Helper.MapRelation
+  import Helper.MapHelper
 
   alias BaseBlogWeb.UserView
   alias BaseBlogWeb.AuthorView

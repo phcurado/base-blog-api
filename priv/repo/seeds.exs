@@ -11,9 +11,9 @@
 # and so on) as they will fail if something goes wrong.
 
 alias BaseBlog.Repo
-alias BaseBlog.Posts.Category
+alias BaseBlog.Posts.Tag
 
 Repo.insert!(
-    %Category{
+    %Tag{
         name: "Categoria 1"
 })

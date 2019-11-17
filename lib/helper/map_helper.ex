@@ -1,4 +1,4 @@
-defmodule Helper.MapRelation do
+defmodule Helper.MapHelper do
 	def add_relation(struct, field, value) when is_nil(value) == false do
     struct
     |> Map.put(field, value)

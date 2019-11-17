@@ -3,11 +3,15 @@ defmodule BaseBlogWeb.PostController do
 
   alias BaseBlog.Posts
   alias BaseBlog.Posts.Post
+  alias Helper.ConnHelper
 
   action_fallback BaseBlogWeb.FallbackController
 
   def index(conn, _params) do
-    posts = Posts.list_posts()
+    page = ConnHelper.get_pagination_page(conn)
+    size = ConnHelper.get_pagination_size(conn)
+
+    posts = Posts.list_posts(page, size, conn.body_params)
     render(conn, "index.json", posts: posts)
   end
 
