@@ -12,16 +12,15 @@ defmodule BaseBlogWeb.AuthorView do
   end
 
   def render("author.json", %{author: author}) do
-    author_serial author
+    author
+    |> mount_base_struct()
   end
 
-  def author_serial(%Author{} = author) do
-    %{id: author.id,
+  defp mount_base_struct(%Author{} = author) do
+    %{
+      id: author.id,
       nickname: author.nickname
     }
   end
 
-  def author_serial(_) do
-    %{}
-  end
 end

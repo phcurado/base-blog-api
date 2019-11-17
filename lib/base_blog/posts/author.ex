@@ -4,7 +4,7 @@ defmodule BaseBlog.Posts.Author do
   alias BaseBlog.Accounts.User
   alias BaseBlog.Posts.Post
 
-  schema "authors" do
+  schema "author" do
     field :nickname, :string
     belongs_to :user, User
     has_many :posts, Post

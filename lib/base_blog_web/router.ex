@@ -11,8 +11,7 @@ defmodule BaseBlogWeb.Router do
 
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
-    
-    resources "/posts", PostController
+
   end
 
   scope "/api", BaseBlogWeb do
@@ -20,6 +19,8 @@ defmodule BaseBlogWeb.Router do
 
     get "/me", UserController, :show
     put "/users/:id", UserController, :update
+        
+    resources "/posts", PostController
   end
   
   pipeline :jwt_authenticated do

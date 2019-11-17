@@ -5,7 +5,7 @@ defmodule BaseBlog.Accounts.User do
   alias BaseBlog.Posts.Author
 
 
-  schema "users" do
+  schema "user" do
     field :email, :string
     field :password_hash, :string
     field :name, :string
@@ -28,7 +28,7 @@ defmodule BaseBlog.Accounts.User do
     |> validate_confirmation(:password)
     |> unique_constraint(:email) 
     |> put_password_hash
-    |> cast_assoc(:author, with: &BaseBlog.Posts.Author.changeset/2)
+    |> cast_assoc(:author, with: &Author.changeset/2)
   end
 
   defp put_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
