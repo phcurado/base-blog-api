@@ -40,5 +40,6 @@ defmodule BaseBlogWeb.Endpoint do
     key: "_base_blog_key",
     signing_salt: "PoxP5Cm5"
 
+  plug CORSPlug, origin: ["*"]
   plug BaseBlogWeb.Router
 end
