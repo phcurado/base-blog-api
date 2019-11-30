@@ -12,8 +12,21 @@
 
 alias BaseBlog.Repo
 alias BaseBlog.Posts.Tag
+alias BaseBlog.Accounts.User
+alias BaseBlog.Accounts
 
 Repo.insert!(
     %Tag{
         name: "Categoria 1"
+    }
+)
+Accounts.create_user(%{
+    email: "admin@admin.com", 
+    name: "admin",
+    birthday: ~D[1990-10-05],
+    password: "admin1",
+    password_confirmation: "admin1",
+    author: %{
+        nickname: "admin"
+    }
 })

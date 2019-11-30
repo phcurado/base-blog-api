@@ -39,11 +39,11 @@ defmodule BaseBlogWeb.PostController do
     end
   end
 
-  # def delete(conn, %{"id" => id}) do
-  #   author = Accounts.get_author!(id)
+  def delete(conn, %{"id" => id}) do
+    post = Posts.get_post!(id)
 
-  #   with {:ok, %Author{}} <- Accounts.delete_author(author) do
-  #     send_resp(conn, :no_content, "")
-  #   end
-  # end
+    with {:ok, %Post{}} <- Posts.delete_post(post) do
+      send_resp(conn, :no_content, "")
+    end
+  end
 end

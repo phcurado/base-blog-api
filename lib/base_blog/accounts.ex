@@ -2,7 +2,6 @@ defmodule BaseBlog.Accounts do
   import Ecto.Query, warn: false
   alias BaseBlog.Repo
   alias BaseBlog.Accounts.User
-  alias BaseBlog.Posts.Author
   alias BaseBlog.Guardian
   import Bcrypt, only: [check_pass: 2]
 
@@ -52,10 +51,11 @@ defmodule BaseBlog.Accounts do
   end
 
   defp user_email_password_auth(email, password) do
-    email
-    |> get_user_by_email()
-    |> Map.put(:password, password)
-    |> verify_user()
+    with %User{} = user <- get_user_by_email(email) do
+      user
+      |> Map.put(:password, password)
+      |> verify_user()  
+    end
   end
 
   defp get_user_by_email(email) do

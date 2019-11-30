@@ -59,13 +59,13 @@ defmodule BaseBlog.Posts do
 
 	def create_post(attrs \\ %{}) do
 		%Post{}
-    |> Post.changeset(attrs, parse_tags(attrs["tags"] || ""))
+    |> Post.changeset(attrs, parse_tags(attrs["tags"] || []))
 		|> Repo.insert()
 	end
 	
   def update_post(%Post{} = post, attrs) do
     post
-    |> Post.changeset(attrs, parse_tags(attrs["tags"] || ""))
+    |> Post.changeset(attrs, parse_tags(attrs["tags"] || []))
     |> Repo.update()
   end
 
