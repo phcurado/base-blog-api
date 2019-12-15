@@ -10,9 +10,16 @@ defmodule BaseBlogWeb.PostController do
   def index(conn, _params) do
     page = ConnHelper.get_pagination_page(conn)
     size = ConnHelper.get_pagination_size(conn)
-
-    posts = Posts.list_posts(page, size, conn.body_params)
-    render(conn, "index.json", posts: posts)
+    pagination = Posts.list_posts(page, size, conn.query_params)
+    render(conn, "index.json", 
+      posts: pagination.data, 
+      metadata: 
+        %{
+          page: page, 
+          size: size, 
+          total: pagination.total
+        }
+    )
   end
 
   def create(conn, %{"post" => post_params}) do

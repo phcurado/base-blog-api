@@ -31,15 +31,13 @@ defmodule BaseBlog.Posts do
 		post_query()
 		|> post_ordered_query()
 		|> PaginationHelper.page(page, size)
-		|> Repo.all()
 	end
 
 	def list_posts(page, size, params) do
 		post_query()
 		|> post_ordered_query()
-		|> PaginationHelper.page(page, size)
 		|> filter_by_title(params["title"])
-		|> Repo.all()
+		|> PaginationHelper.page(page, size)
 	end
 
 	defp filter_by_title(query, title) when not(is_nil(title)) do

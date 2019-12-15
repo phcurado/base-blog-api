@@ -9,8 +9,11 @@ defmodule BaseBlogWeb.PostView do
   alias BaseBlog.Posts.Author
   alias BaseBlog.Posts.Post
 
-  def render("index.json", %{posts: posts}) do
-    %{data: render_many(posts, PostView, "post.json")}
+  def render("index.json", %{posts: posts, metadata: metadata}) do
+    %{
+      data: render_many(posts, PostView, "post.json"),
+      metadata: metadata
+    }
   end
 
   def render("show.json", %{post: post}) do
