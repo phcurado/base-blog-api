@@ -1,7 +1,8 @@
 defmodule BaseBlog.Guardian do
     use Guardian, otp_app: :base_blog
+    alias BaseBlog.Accounts.User
   
-    def subject_for_token(user, _claims) do
+    def subject_for_token(%User{} = user, _claims) do
       sub = to_string(user.id)
       {:ok, sub}
     end

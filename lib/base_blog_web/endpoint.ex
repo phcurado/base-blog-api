@@ -40,6 +40,12 @@ defmodule BaseBlogWeb.Endpoint do
     key: "_base_blog_key",
     signing_salt: "PoxP5Cm5"
 
-  plug CORSPlug, origin: ["http://localhost:8080"]
+  plug Corsica,
+    origins: "http://localhost:8080",
+    allow_credentials: true,
+    allow_headers: ["Content-Type", "Authorization", "Page", "Size"],
+    log: [rejected: :error, invalid: :warn, accepted: :debug]
+      
+
   plug BaseBlogWeb.Router
 end

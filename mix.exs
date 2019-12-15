@@ -44,7 +44,7 @@ defmodule BaseBlog.MixProject do
       {:comeonin, "~> 5.0"},
       {:bcrypt_elixir, "~> 2.0"},
       {:guardian, "~> 2.0"},
-      {:cors_plug, "~> 2.0"},
+      {:corsica, "~> 1.0"}
     ]
   end
 
